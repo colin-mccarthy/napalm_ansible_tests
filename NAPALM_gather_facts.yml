@@ -6,9 +6,11 @@
   tasks:
   - name: get facts from device
     napalm_get_facts:
-      hostname={{ inventory_hostname }}
-      username={{ username }}
-      dev_os={{ os }}
-      password={{ password }}
+      hostname={{ ansible_ssh_host }}
+      username={{ remote_user }}
+      dev_os={{ ansible_network_os }}
+      password={{ ansible_ssh_pass }}
       filter='facts,interfaces,bgp_neighbors'
-    register: result
+    register: napalm_facts
+    
+  - debug: var=napalm_facts
